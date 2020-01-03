@@ -53,6 +53,54 @@ properties([disableConcurrentBuilds()])
                                 dockerImage.push()
                             }
                         }
+                        dir ("${workspace}/gateway") {
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-gateway:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
+                        }
+                        dir ("${workspace}/auth-service") {
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-auth-service:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
+                        }
+                        dir ("${workspace}/mongodb") {
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-mongodb:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
+                        }
+                        dir ("${workspace}/account-service") {
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-account-service:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
+                        }
+                        dir ("${workspace}/statistics-service") {
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-statistics-service:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
+                        }
+                        dir ("${workspace}/notification-service") {
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-notification-service:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
+                        }
+                        dir ("${workspace}/monitoring") {
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-monitoring:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
+                        }
+                        dir ("${workspace}/turbine-stream-service") {
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-turbine-stream-service:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
+                        }
                     }
                 }
             }

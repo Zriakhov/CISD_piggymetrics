@@ -34,7 +34,7 @@ properties([disableConcurrentBuilds()])
             stage('Building project') {
                 steps {
                    echo "-=- Build project -=-"
-                   sh "mvn install -Dmaven.test.skip=true"
+                   sh "mvn package -Dmaven.test.skip=true"
                 }
             }
             /*stage('Building docker image') {

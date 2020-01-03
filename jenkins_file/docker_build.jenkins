@@ -37,13 +37,14 @@ properties([disableConcurrentBuilds()])
                    sh "mvn package -Dmaven.test.skip=true"
                 }
             }
-            /*stage('Building docker image') {
+            stage('Building docker image') {
                 steps {
                     echo "-=- Building docker image -=-"
-                    sh "cp ${workspace}/target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar ${workspace}/jenkins_file/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar"
+
+                    // sh "cp ${workspace}/target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar ${workspace}/jenkins_file/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar"
                     script {
-                        dir ("${workspace}/jenkins_file") {
-                        dockerImage=docker.build("127.0.0.1:5000/petclinic:latest")
+                        dir ("${workspace}/config") {
+                        dockerImage=docker.build("127.0.0.1:5000/piggymetrics-config:latest")
                         }
                     }
                 }
@@ -58,7 +59,7 @@ properties([disableConcurrentBuilds()])
                     }
                 }
             }
-            stage('Deploy Image') {
+            /*stage('Deploy Image') {
                 agent { label 'slave01' }
                 options { skipDefaultCheckout() }
                 steps {

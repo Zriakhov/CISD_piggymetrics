@@ -18,9 +18,9 @@ properties([disableConcurrentBuilds()])
                     echo "-=- Cleaning project -=-"
                     //withMaven (...) {
                     //withMaven() {
-                        // sh './mvnw clean'
                         sh 'pwd'
                         sh 'find / -name *mvn*'
+                        sh 'mvn clean'
                     //}    
                     //}
                 }

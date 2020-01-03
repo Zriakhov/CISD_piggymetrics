@@ -16,29 +16,19 @@ properties([disableConcurrentBuilds()])
                 steps {
                     git url: 'https://github.com/sqshq/piggymetrics.git' 
                     echo "-=- Cleaning project -=-"
-                    //withMaven (...) {
-                    //withMaven() {
-                        //sh 'pwd'
-                        //sh 'find / -name *mvn*'
                         sh 'mvn clean'
-                    //}    
-                    //}
                 }
             }
-            /*stage('Compile') {
+            stage('Compile') {
                 steps {
                     echo "-=- compiling project -=-"
-                    //withMaven() {
                         sh "./mvnw compile"
-                    //}
                 }
             }
             stage('Testing') {
                 steps {
                     echo "-=- Testing -=-"
-                    //withMaven() {
                         sh "./mvnw test"
-                    //}
                 }
             }
             stage('Building project') {
@@ -46,7 +36,7 @@ properties([disableConcurrentBuilds()])
                    echo "-=- Build project -=-"
                    sh "./mvnw install -Dmaven.test.skip=true"
                 }
-            }*/
+            }
             /*stage('Building docker image') {
                 steps {
                     echo "-=- Building docker image -=-"

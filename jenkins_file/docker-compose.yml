@@ -1,36 +1,184 @@
-version: '3'
+version: '2.1'
 services:
-  jenkins:
-    build:
-      context: .
-      dockerfile: jenkins_docker_file.dockerfile
-    image: 'jenkins/jenkins:lts'
+  rabbitmq:
+    image: rabbitmq:3-management
     restart: always
-    privileged: true
     ports:
-      - 80:8080
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - jenkins_data:/home/jenkins
-  registry:
-    restart: always
-    image: 'registry'
-    container_name: registry_v2
-    ports:
-      - 5000:5000
+      - 15672:15672
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  config:
     environment:
-      - REGISTRY_AUTH=htpasswd
-      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
-      - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd
-      - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/docker-registry.crt
-      - REGISTRY_HTTP_TLS_KEY=/certs/docker-registry.key 
-    volumes:
-      - /opt/docker/containers/docker-registry/certs:/certs
-      - /opt/docker/containers/docker-registry/registry:/var/lib/registry
-      - /opt/docker/containers/docker-registry/auth:/auth
-      #      - repo:/var/lib/registry
-volumes:
-  jenkins_data:
-    driver: local
-  repo:
-    driver: local
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-config
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  registry:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-registry
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+      - 8761:8761
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  gateway:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-gateway
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+      - 80:4000
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  auth-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+      STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
+      ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-auth-service
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  auth-mongodb:
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-mongodb
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  account-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-account-service
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  account-mongodb:
+    environment:
+      INIT_DUMP: account-service-dump.js
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-mongodb
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  statistics-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-statistics-service
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  statistics-mongodb:
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-mongodb
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  notification-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-notification-service
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  notification-mongodb:
+    image: 10.23.27.6:5000/piggymetrics-mongodb
+    restart: always
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  monitoring:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-monitoring
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+      - 9000:8080
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  turbine-stream-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: 10.23.27.6:5000/piggymetrics-turbine-stream-service
+    restart: always
+    depends_on:
+      config:
+        condition: service_healthy
+    ports:
+    - 8989:8989
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"

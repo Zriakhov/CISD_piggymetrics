@@ -1,9 +1,6 @@
 #!groovy
 properties([disableConcurrentBuilds()])
-    //agent any
-    //tools { maven 'Maven' }
     pipeline {
-        //agent any
         agent {label 'master'}
         tools { maven 'maven' }
         options {
@@ -104,25 +101,15 @@ properties([disableConcurrentBuilds()])
                     }
                 }
             }
-            /*stage('Send Image in registry') {
-                steps{
-                    echo "-=- Sending image in registry -=-"
-                    script {
-                        docker.withRegistry( 'https://127.0.0.1:5000' ){
-                            dockerImage.push()
-                        }
-                    }
-                }
-            }
             stage('Deploy Image') {
                 agent { label 'slave01' }
                 options { skipDefaultCheckout() }
                 steps {
                    echo "-=- Deploy Image -=-"
-                   //sh 'sudo docker stop $(docker ps | grep petclinic | cut -d\' \' -f 1)'
+                   sh 'sudo docker stop $(docker ps | grep petclinic | cut -d\' \' -f 1)'
                    //sh 'sudo docker run -p 8080:8080 -d 10.23.27.6:5000/petclinic:latest'
                    //sh '/home/vagrant/start'
                 }
-            }*/
+            }
         }
     }

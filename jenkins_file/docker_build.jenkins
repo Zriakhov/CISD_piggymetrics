@@ -22,13 +22,13 @@ properties([disableConcurrentBuilds()])
             stage('Compile') {
                 steps {
                     echo "-=- compiling project -=-"
-                        sh "mvn compile"
+                    //    sh "mvn compile"
                 }
             }
             stage('Testing') {
                 steps {
                     echo "-=- Testing -=-"
-                        sh "mvn test"
+                    //    sh "mvn test"
                 }
             }
             stage('Building project') {
@@ -40,11 +40,18 @@ properties([disableConcurrentBuilds()])
             stage('Building docker image') {
                 steps {
                     echo "-=- Building docker image -=-"
-
-                    // sh "cp ${workspace}/target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar ${workspace}/jenkins_file/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar"
                     script {
                         dir ("${workspace}/config") {
-                        dockerImage=docker.build("127.0.0.1:5000/piggymetrics-config:latest")
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-config:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
+                        }
+                        dir ("${workspace}/registry") {
+                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-registry:latest")
+                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                                dockerImage.push()
+                            }
                         }
                     }
                 }

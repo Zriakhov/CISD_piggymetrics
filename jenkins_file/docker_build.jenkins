@@ -13,7 +13,7 @@ properties([disableConcurrentBuilds()])
         stages {
             stage('Preparation') {
                 steps {
-                    git url: 'https://github.com/Zriakhov/CISD_piggymetrics.git' 
+                    git url: 'https://github.com/sqshq/piggymetrics.git' 
                     echo "-=- Cleaning project -=-"
                     //withMaven() {
                         sh "./mvnw clean"

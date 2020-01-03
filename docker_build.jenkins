@@ -102,7 +102,7 @@ properties([disableConcurrentBuilds()])
                 }
             }
             stage('Deploy Image') {
-                agent { label 'slave01' }
+                agent { label 'slave1' }
                 options { skipDefaultCheckout() }
                 steps {
                    echo "-=- Deploy Image -=-"

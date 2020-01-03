@@ -20,7 +20,7 @@ properties([disableConcurrentBuilds()])
                     //}
                 }
             }
-            stage('Compile') {
+            /*stage('Compile') {
                 steps {
                     echo "-=- compiling project -=-"
                     //withMaven() {
@@ -41,7 +41,7 @@ properties([disableConcurrentBuilds()])
                    echo "-=- Build project -=-"
                    sh "./mvnw install -Dmaven.test.skip=true"
                 }
-            }
+            }*/
             /*stage('Building docker image') {
                 steps {
                     echo "-=- Building docker image -=-"

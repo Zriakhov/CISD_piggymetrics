@@ -22,19 +22,19 @@ properties([disableConcurrentBuilds()])
             stage('Compile') {
                 steps {
                     echo "-=- compiling project -=-"
-                        sh "./mvnw compile"
+                        sh "mvn compile"
                 }
             }
             stage('Testing') {
                 steps {
                     echo "-=- Testing -=-"
-                        sh "./mvnw test"
+                        sh "mvn test"
                 }
             }
             stage('Building project') {
                 steps {
                    echo "-=- Build project -=-"
-                   sh "./mvnw install -Dmaven.test.skip=true"
+                   sh "mvn install -Dmaven.test.skip=true"
                 }
             }
             /*stage('Building docker image') {

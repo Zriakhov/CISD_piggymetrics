@@ -1,0 +1,36 @@
+version: '3'
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: jenkins_docker_file.dockerfile
+    image: 'jenkins/jenkins:lts'
+    restart: always
+    privileged: true
+    ports:
+      - 80:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - jenkins_data:/home/jenkins
+  registry:
+    restart: always
+    image: 'registry'
+    container_name: registry_v2
+    ports:
+      - 5000:5000
+    environment:
+      - REGISTRY_AUTH=htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
+      - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd
+      - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/docker-registry.crt
+      - REGISTRY_HTTP_TLS_KEY=/certs/docker-registry.key 
+    volumes:
+      - /opt/docker/containers/docker-registry/certs:/certs
+      - /opt/docker/containers/docker-registry/registry:/var/lib/registry
+      - /opt/docker/containers/docker-registry/auth:/auth
+      #      - repo:/var/lib/registry
+volumes:
+  jenkins_data:
+    driver: local
+  repo:
+    driver: local

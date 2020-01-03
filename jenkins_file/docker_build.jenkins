@@ -1,0 +1,77 @@
+#!groovy
+properties([disableConcurrentBuilds()])
+    //agent any
+    //tools { maven 'Maven' }
+    pipeline {
+        //agent any
+        agent {label 'master'}
+        tools { maven 'maven' }
+        options {
+            buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+            timestamps()
+        }
+        stages {
+            stage('Preparation') {
+                steps {
+                    git url: 'https://github.com/Zriakhov/CISD_piggymetrics.git' 
+                    echo "-=- Cleaning project -=-"
+                    //withMaven() {
+                        sh "./mvnw clean"
+                    //}
+                }
+            }
+            stage('Compile') {
+                steps {
+                    echo "-=- compiling project -=-"
+                    //withMaven() {
+                        sh "./mvnw compile"
+                    //}
+                }
+            }
+            stage('Testing') {
+                steps {
+                    echo "-=- Testing -=-"
+                    //withMaven() {
+                        sh "./mvnw test"
+                    //}
+                }
+            }
+            stage('Building project') {
+                steps {
+                   echo "-=- Build project -=-"
+                   sh "./mvnw install -Dmaven.test.skip=true"
+                }
+            }
+            /*stage('Building docker image') {
+                steps {
+                    echo "-=- Building docker image -=-"
+                    sh "cp ${workspace}/target/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar ${workspace}/jenkins_file/spring-petclinic-2.2.0.BUILD-SNAPSHOT.jar"
+                    script {
+                        dir ("${workspace}/jenkins_file") {
+                        dockerImage=docker.build("127.0.0.1:5000/petclinic:latest")
+                        }
+                    }
+                }
+            }
+            stage('Send Image in registry') {
+                steps{
+                    echo "-=- Sending image in registry -=-"
+                    script {
+                        docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage.push()
+                        }
+                    }
+                }
+            }
+            stage('Deploy Image') {
+                agent { label 'slave01' }
+                options { skipDefaultCheckout() }
+                steps {
+                   echo "-=- Deploy Image -=-"
+                   //sh 'sudo docker stop $(docker ps | grep petclinic | cut -d\' \' -f 1)'
+                   //sh 'sudo docker run -p 8080:8080 -d 10.23.27.6:5000/petclinic:latest'
+                   //sh '/home/vagrant/start'
+                }
+            }*/
+        }
+    }

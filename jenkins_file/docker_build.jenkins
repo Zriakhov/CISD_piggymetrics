@@ -20,7 +20,7 @@ properties([disableConcurrentBuilds()])
                     //withMaven() {
                         // sh './mvnw clean'
                         sh 'pwd'
-                        sh 'find / -name *mvnw*'
+                        sh 'find / -name *mvn*'
                     //}    
                     //}
                 }

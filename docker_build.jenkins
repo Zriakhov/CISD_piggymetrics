@@ -93,7 +93,7 @@ properties([disableConcurrentBuilds()])
                             }
                         }
                         dir ("${workspace}/turbine-stream-service") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-turbine-stream-service:latest")
+                            dockerImage=docker.build("localhost:5000/piggymetrics-turbine-stream-service:latest")
                             docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }

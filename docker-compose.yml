@@ -13,7 +13,8 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-config
+    image: 192.168.2.112:5000/piggymetrics-config
+#    image: 10.23.27.6:5000/piggymetrics-config
     restart: always
     logging:
       options:
@@ -23,7 +24,8 @@ services:
   registry:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-registry
+    #image: 10.23.27.6:5000/piggymetrics-registry
+    image: 192.168.2.112:5000/piggymetrics-registry
     restart: always
     depends_on:
       config:
@@ -38,7 +40,8 @@ services:
   gateway:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-gateway
+    #image: 10.23.27.6:5000/piggymetrics-gateway
+    image: 192.168.2.112:5000/piggymetrics-gateway
     restart: always
     depends_on:
       config:
@@ -57,7 +60,8 @@ services:
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-auth-service
+    #image: 10.23.27.6:5000/piggymetrics-auth-service
+    image: 192.168.2.112:5000/piggymetrics-auth-service
     restart: always
     depends_on:
       config:
@@ -70,7 +74,8 @@ services:
   auth-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-mongodb
+    #image: 10.23.27.6:5000/piggymetrics-mongodb
+    image: 192.168.2.112:5000/piggymetrics-mongodb
     restart: always
     logging:
       options:
@@ -82,7 +87,8 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-account-service
+    #image: 10.23.27.6:5000/piggymetrics-account-service
+    image: 192.168.2.112:5000/piggymetrics-account-service
     restart: always
     depends_on:
       config:
@@ -96,7 +102,8 @@ services:
     environment:
       INIT_DUMP: account-service-dump.js
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-mongodb
+    #image: 10.23.27.6:5000/piggymetrics-mongodb
+    image: 192.168.2.112:5000/piggymetrics-mongodb
     restart: always
     logging:
       options:
@@ -108,7 +115,8 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-statistics-service
+    #image: 10.23.27.6:5000/piggymetrics-statistics-service
+    image: 192.168.2.112:5000/piggymetrics-statistics-service
     restart: always
     depends_on:
       config:
@@ -121,7 +129,8 @@ services:
   statistics-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-mongodb
+    #image: 10.23.27.6:5000/piggymetrics-mongodb
+    image: 192.168.2.112:5000/piggymetrics-mongodb
     restart: always
     logging:
       options:
@@ -133,7 +142,8 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-notification-service
+    #image: 10.23.27.6:5000/piggymetrics-notification-service
+    image: 192.168.2.112:5000/piggymetrics-notification-service
     restart: always
     depends_on:
       config:
@@ -144,7 +154,8 @@ services:
         max-file: "10"
 
   notification-mongodb:
-    image: 10.23.27.6:5000/piggymetrics-mongodb
+    #image: 10.23.27.6:5000/piggymetrics-mongodb
+    image: 192.168.2.112:5000/piggymetrics-mongodb
     restart: always
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
@@ -156,7 +167,8 @@ services:
   monitoring:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-monitoring
+    #image: 10.23.27.6:5000/piggymetrics-monitoring
+    image: 192.168.2.112:5000/piggymetrics-monitoring
     restart: always
     depends_on:
       config:
@@ -171,7 +183,8 @@ services:
   turbine-stream-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: 10.23.27.6:5000/piggymetrics-turbine-stream-service
+    #image: 10.23.27.6:5000/piggymetrics-turbine-stream-service
+    image: 192.168.2.112:5000/piggymetrics-turbine-stream-service
     restart: always
     depends_on:
       config:

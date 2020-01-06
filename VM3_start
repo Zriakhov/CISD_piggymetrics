@@ -1,5 +1,5 @@
 #!/bin/bash
 
-a=$(sudo docker ps | grep petclinic | cut -d' ' -f 1)
-sudo docker stop $a
-sudo docker run -p 8080:8080 -d 10.23.27.6:5000/petclinic:latest
+#a=$(sudo docker ps | grep petclinic | cut -d' ' -f 1)
+#sudo docker stop $a
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up

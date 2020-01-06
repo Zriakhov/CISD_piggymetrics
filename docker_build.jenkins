@@ -106,7 +106,7 @@ properties([disableConcurrentBuilds()])
                 options { skipDefaultCheckout() }
                 steps {
                     echo "-=- Deploy Image -=-"
-                    dir ("${HOME}/CISD_piggymetrics$") {
+                    dir ("${HOME}/CISD_piggymetrics") {
                         sh './VM3_start.sh'
                     }
                 //   sh '${HOME}/VM3_start.sh'

@@ -11,7 +11,7 @@ properties([disableConcurrentBuilds()])
             stage('Preparation') {
 
                 steps {
-                    git url: 'https://github.com/sqshq/piggymetrics.git' 
+                    git url: 'https://github.com/sqshq/piggymetrics.git'
                     echo "-=- Cleaning project -=-"
                         sh 'mvn clean'
                 }
@@ -39,62 +39,62 @@ properties([disableConcurrentBuilds()])
                     echo "-=- Building docker image -=-"
                     script {
                         dir ("${workspace}/config") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-config:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage=docker.build("localhost:5000/piggymetrics-config:latest")
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
                         dir ("${workspace}/registry") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-registry:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage=docker.build("localhost:5000/piggymetrics-registry:latest")
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
                         dir ("${workspace}/gateway") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-gateway:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage=docker.build("localhost:5000/piggymetrics-gateway:latest")
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
                         dir ("${workspace}/auth-service") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-auth-service:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage=docker.build("localhost:5000/piggymetrics-auth-service:latest")
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
                         dir ("${workspace}/mongodb") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-mongodb:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage=docker.build("localhost:5000/piggymetrics-mongodb:latest")
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
                         dir ("${workspace}/account-service") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-account-service:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage=docker.build("localhost:5000/piggymetrics-account-service:latest")
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
                         dir ("${workspace}/statistics-service") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-statistics-service:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage=docker.build("localhost:5000/piggymetrics-statistics-service:latest")
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
                         dir ("${workspace}/notification-service") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-notification-service:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage=docker.build("localhost:5000/piggymetrics-notification-service:latest")
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
                         dir ("${workspace}/monitoring") {
-                            dockerImage=docker.build("127.0.0.1:5000/piggymetrics-monitoring:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            dockerImage=docker.build("localhost:5000/piggymetrics-monitoring:latest")
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
                         dir ("${workspace}/turbine-stream-service") {
                             dockerImage=docker.build("127.0.0.1:5000/piggymetrics-turbine-stream-service:latest")
-                            docker.withRegistry( 'https://127.0.0.1:5000' ){
+                            docker.withRegistry( 'https://localhost:5000' ){
                                 dockerImage.push()
                             }
                         }
@@ -106,10 +106,7 @@ properties([disableConcurrentBuilds()])
                 options { skipDefaultCheckout() }
                 steps {
                    echo "-=- Deploy Image -=-"
-                   sh 'cd ~/CISD_piggymetrics'
-                   sh 'pwd'
-                   //sh 'sudo docker run -p 8080:8080 -d 10.23.27.6:5000/petclinic:latest'
-                   //sh '/home/vagrant/start'
+                //   sh '${HOME}/VM3_start.sh'
                 }
             }
         }

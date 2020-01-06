@@ -19,13 +19,13 @@ properties([disableConcurrentBuilds()])
             stage('Compile') {
                 steps {
                     echo "-=- compiling project -=-"
-                    //    sh "mvn compile"
+                        sh "mvn compile"
                 }
             }
             stage('Testing') {
                 steps {
                     echo "-=- Testing -=-"
-                    //    sh "mvn test"
+                        sh "mvn test"
                 }
             }
             stage('Building project') {
@@ -109,7 +109,6 @@ properties([disableConcurrentBuilds()])
                     dir ("${HOME}/CISD_piggymetrics") {
                         sh './VM3_start.sh'
                     }
-                //   sh '${HOME}/VM3_start.sh'
                 }
             }
         }

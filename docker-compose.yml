@@ -15,7 +15,7 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: 192.168.2.112:5000/piggymetrics-config
+    image: 192.168.2.112:5000/piggymetrics-config:latest
 #    image: 10.23.27.6:5000/piggymetrics-config
     restart: always
     ports:
@@ -29,7 +29,7 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-registry
-    image: 192.168.2.112:5000/piggymetrics-registry
+    image: 192.168.2.112:5000/piggymetrics-registry:latest
     restart: always
     depends_on:
       config:
@@ -45,7 +45,7 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-gateway
-    image: 192.168.2.112:5000/piggymetrics-gateway
+    image: 192.168.2.112:5000/piggymetrics-gateway:latest
     restart: always
     depends_on:
       config:
@@ -65,7 +65,7 @@ services:
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-auth-service
-    image: 192.168.2.112:5000/piggymetrics-auth-service
+    image: 192.168.2.112:5000/piggymetrics-auth-service:latest
     restart: always
     ports:
       - 5000:5000
@@ -81,7 +81,7 @@ services:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-mongodb
-    image: 192.168.2.112:5000/piggymetrics-mongodb
+    image: 192.168.2.112:5000/piggymetrics-mongodb:latest
     restart: always
     ports:
       - 25000:27017
@@ -96,7 +96,7 @@ services:
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-account-service
-    image: 192.168.2.112:5000/piggymetrics-account-service
+    image: 192.168.2.112:5000/piggymetrics-account-service:latest
     restart: always
     ports:
       - 6000:6000
@@ -113,7 +113,7 @@ services:
       INIT_DUMP: account-service-dump.js
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-mongodb
-    image: 192.168.2.112:5000/piggymetrics-mongodb
+    image: 192.168.2.112:5000/piggymetrics-mongodb:latest
     restart: always
     ports:
       - 26000:27017
@@ -128,7 +128,7 @@ services:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-statistics-service
-    image: 192.168.2.112:5000/piggymetrics-statistics-service
+    image: 192.168.2.112:5000/piggymetrics-statistics-service:latest
     restart: always
     ports:
       - 7000:7000
@@ -144,7 +144,7 @@ services:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-mongodb
-    image: 192.168.2.112:5000/piggymetrics-mongodb
+    image: 192.168.2.112:5000/piggymetrics-mongodb:latest
     restart: always
     ports:
       - 27000:27017
@@ -159,7 +159,7 @@ services:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-notification-service
-    image: 192.168.2.112:5000/piggymetrics-notification-service
+    image: 192.168.2.112:5000/piggymetrics-notification-service:latest
     restart: always
     ports:
       - 8000:8000
@@ -173,7 +173,7 @@ services:
 
   notification-mongodb:
     #image: 10.23.27.6:5000/piggymetrics-mongodb
-    image: 192.168.2.112:5000/piggymetrics-mongodb
+    image: 192.168.2.112:5000/piggymetrics-mongodb:latest
     restart: always
     ports:
       - 28000:27017
@@ -188,7 +188,7 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-monitoring
-    image: 192.168.2.112:5000/piggymetrics-monitoring
+    image: 192.168.2.112:5000/piggymetrics-monitoring:latest
     restart: always
     depends_on:
       config:
@@ -204,7 +204,7 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     #image: 10.23.27.6:5000/piggymetrics-turbine-stream-service
-    image: 192.168.2.112:5000/piggymetrics-turbine-stream-service
+    image: 192.168.2.112:5000/piggymetrics-turbine-stream-service:latest
     restart: always
     depends_on:
       config:

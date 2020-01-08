@@ -109,6 +109,7 @@ properties([disableConcurrentBuilds()])
                     dir ("${HOME}/CISD_piggymetrics") {
                         sh './VM3_start.sh'
                     }
+                    mail bcc: '', body: 'The deployment of "Piggy Metrics" project completed successfully with new build, http://10.23.27.8:80/', cc: '', from: '', replyTo: '', subject: 'Jenkins: from "pm-job"', to: 'Mykhailo_Zriakhov@epam.com'
                 }
             }
         }

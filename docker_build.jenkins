@@ -42,60 +42,70 @@ properties([disableConcurrentBuilds()])
                             dockerImage=docker.build("localhost:443/piggymetrics-config:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                         dir ("${workspace}/registry") {
                             dockerImage=docker.build("localhost:443/piggymetrics-registry:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                         dir ("${workspace}/gateway") {
                             dockerImage=docker.build("localhost:443/piggymetrics-gateway:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                         dir ("${workspace}/auth-service") {
                             dockerImage=docker.build("localhost:443/piggymetrics-auth-service:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                         dir ("${workspace}/mongodb") {
                             dockerImage=docker.build("localhost:443/piggymetrics-mongodb:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                         dir ("${workspace}/account-service") {
                             dockerImage=docker.build("localhost:443/piggymetrics-account-service:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                         dir ("${workspace}/statistics-service") {
                             dockerImage=docker.build("localhost:443/piggymetrics-statistics-service:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                         dir ("${workspace}/notification-service") {
                             dockerImage=docker.build("localhost:443/piggymetrics-notification-service:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                         dir ("${workspace}/monitoring") {
                             dockerImage=docker.build("localhost:443/piggymetrics-monitoring:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                         dir ("${workspace}/turbine-stream-service") {
                             dockerImage=docker.build("localhost:443/piggymetrics-turbine-stream-service:latest")
                             docker.withRegistry( 'https://localhost:443' ){
                                 dockerImage.push()
+                                dockerImage.push("stable")
                             }
                         }
                     }

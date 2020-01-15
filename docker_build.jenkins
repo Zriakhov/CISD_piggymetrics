@@ -16,12 +16,6 @@ properties([disableConcurrentBuilds()])
                         sh 'mvn clean'
                 }
             }
-/*            stage('Compile') {
-                steps {
-                    echo "-=- compiling project -=-"
-                        sh "mvn compile -Dmaven.test.skip=true"
-                }
-            }*/
             stage('Building project') {
                 steps {
                    echo "-=- Build project -=-"
@@ -73,71 +67,7 @@ properties([disableConcurrentBuilds()])
                                 dockerImage_notification_service.push()
                                 dockerImage_monitoring.push()
                                 dockerImage_turbine_stream_service.push()
-                                //dockerImage.push("stable")
                             }
-                        /*dir ("${workspace}/registry") {
-                            dockerImage=docker.build("localhost:443/piggymetrics-registry:${BUILD_NUMBER}")
-                            docker.withRegistry( 'https://localhost:443' ){
-                                dockerImage.push()
-                                dockerImage.push("stable")
-                            }
-                        }
-                        dir ("${workspace}/gateway") {
-                            dockerImage=docker.build("localhost:443/piggymetrics-gateway:${BUILD_NUMBER}")
-                            docker.withRegistry( 'https://localhost:443' ){
-                                dockerImage.push()
-                                dockerImage.push("stable")
-                            }
-                        }
-                        dir ("${workspace}/auth-service") {
-                            dockerImage=docker.build("localhost:443/piggymetrics-auth-service:${BUILD_NUMBER}")
-                            docker.withRegistry( 'https://localhost:443' ){
-                                dockerImage.push()
-                                dockerImage.push("stable")
-                            }
-                        }
-                        dir ("${workspace}/mongodb") {
-                            dockerImage=docker.build("localhost:443/piggymetrics-mongodb:${BUILD_NUMBER}")
-                            docker.withRegistry( 'https://localhost:443' ){
-                                dockerImage.push()
-                                dockerImage.push("stable")
-                            }
-                        }
-                        dir ("${workspace}/account-service") {
-                            dockerImage=docker.build("localhost:443/piggymetrics-account-service:${BUILD_NUMBER}")
-                            docker.withRegistry( 'https://localhost:443' ){
-                                dockerImage.push()
-                                dockerImage.push("stable")
-                            }
-                        }
-                        dir ("${workspace}/statistics-service") {
-                            dockerImage=docker.build("localhost:443/piggymetrics-statistics-service:${BUILD_NUMBER}")
-                            docker.withRegistry( 'https://localhost:443' ){
-                                dockerImage.push()
-                                dockerImage.push("stable")
-                            }
-                        }
-                        dir ("${workspace}/notification-service") {
-                            dockerImage=docker.build("localhost:443/piggymetrics-notification-service:${BUILD_NUMBER}")
-                            docker.withRegistry( 'https://localhost:443' ){
-                                dockerImage.push()
-                                dockerImage.push("stable")
-                            }
-                        }
-                        dir ("${workspace}/monitoring") {
-                            dockerImage=docker.build("localhost:443/piggymetrics-monitoring:${BUILD_NUMBER}")
-                            docker.withRegistry( 'https://localhost:443' ){
-                                dockerImage.push()
-                                dockerImage.push("stable")
-                            }
-                        }
-                        dir ("${workspace}/turbine-stream-service") {
-                            dockerImage=docker.build("localhost:443/piggymetrics-turbine-stream-service:${BUILD_NUMBER}")
-                            docker.withRegistry( 'https://localhost:443' ){
-                                dockerImage.push()
-                                dockerImage.push("stable")
-                            }
-                        }*/
                     }
                 }
             }
@@ -169,7 +99,11 @@ properties([disableConcurrentBuilds()])
                 steps {
                     echo "-=- Deploy Image -=-"
                     dir ("${HOME}/CISD_piggymetrics") {
-                        sh './VM3_start.sh'
+                        sh 'wget https://raw.githubusercontent.com/Zriakhov/CISD_piggymetrics/master/VM3_start.sh'
+                        sh 'wget https://raw.githubusercontent.com/Zriakhov/CISD_piggymetrics/master/docker-compose.yml'
+                        sh 'bash VM3_start.sh'
+                        sh 'rm docker-compose.yml'
+                        sh 'rm VM3_start.sh'
                     }
                     mail bcc: '', body: 'The deployment of "Piggy Metrics" project completed successfully with new build, http://10.23.27.8:80/', cc: '', from: '', replyTo: '', subject: 'Jenkins: from "pm-job"', to: 'Mykhailo_Zriakhov@epam.com'
                 }

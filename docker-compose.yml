@@ -1,12 +1,10 @@
 version: '2.1'
 services:
   rabbitmq:
-    #image: rabbitmq:3-management
     image: rabbitmq
     restart: always
     ports:
       - 15672:15672
-    #  - 5672:5672
     logging:
       options:
         max-size: "10m"
@@ -15,7 +13,6 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-#    image: 192.168.2.112:5000/piggymetrics-config:stable
     image: 10.23.27.6:443/piggymetrics-config:stable
     restart: always
     ports:
@@ -29,7 +26,6 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     image: 10.23.27.6:443/piggymetrics-registry:stable
-#    image: 192.168.2.112:5000/piggymetrics-registry:stable
     restart: always
     depends_on:
       config:
@@ -45,7 +41,6 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     image: 10.23.27.6:443/piggymetrics-gateway:stable
-#    image: 192.168.2.112:5000/piggymetrics-gateway:stable
     restart: always
     depends_on:
       config:
@@ -65,7 +60,6 @@ services:
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: 10.23.27.6:443/piggymetrics-auth-service:stable
-#    image: 192.168.2.112:5000/piggymetrics-auth-service:stable
     restart: always
     ports:
       - 5000:5000
@@ -81,7 +75,6 @@ services:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: 10.23.27.6:443/piggymetrics-mongodb:stable
-#    image: 192.168.2.112:5000/piggymetrics-mongodb:stable
     restart: always
     ports:
       - 25000:27017
@@ -96,7 +89,6 @@ services:
       ACCOUNT_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: 10.23.27.6:443/piggymetrics-account-service:stable
-#    image: 192.168.2.112:5000/piggymetrics-account-service:stable
     restart: always
     ports:
       - 6000:6000
@@ -113,7 +105,6 @@ services:
       INIT_DUMP: account-service-dump.js
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: 10.23.27.6:443/piggymetrics-mongodb:stable
-#    image: 192.168.2.112:5000/piggymetrics-mongodb:stable
     restart: always
     ports:
       - 26000:27017
@@ -128,7 +119,6 @@ services:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       STATISTICS_SERVICE_PASSWORD: $STATISTICS_SERVICE_PASSWORD
     image: 10.23.27.6:443/piggymetrics-statistics-service:stable
-#    image: 192.168.2.112:5000/piggymetrics-statistics-service:stable
     restart: always
     ports:
       - 7000:7000
@@ -144,7 +134,6 @@ services:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: 10.23.27.6:443/piggymetrics-mongodb:stable
-#    image: 192.168.2.112:5000/piggymetrics-mongodb:stable
     restart: always
     ports:
       - 27000:27017
@@ -159,7 +148,6 @@ services:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
     image: 10.23.27.6:443/piggymetrics-notification-service:stable
-#    image: 192.168.2.112:5000/piggymetrics-notification-service:stable
     restart: always
     ports:
       - 8000:8000
@@ -173,7 +161,6 @@ services:
 
   notification-mongodb:
     image: 10.23.27.6:443/piggymetrics-mongodb:stable
-#    image: 192.168.2.112:5000/piggymetrics-mongodb:stable
     restart: always
     ports:
       - 28000:27017
@@ -188,7 +175,6 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     image: 10.23.27.6:443/piggymetrics-monitoring:stable
-#    image: 192.168.2.112:5000/piggymetrics-monitoring:stable
     restart: always
     depends_on:
       config:
@@ -204,7 +190,6 @@ services:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     image: 10.23.27.6:443/piggymetrics-turbine-stream-service:stable
-#    image: 192.168.2.112:5000/piggymetrics-turbine-stream-service:stable
     restart: always
     depends_on:
       config:
